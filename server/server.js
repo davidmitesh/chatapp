@@ -21,12 +21,13 @@ io.on('connection',(socket)=>{
   socket.on('disconnect',()=>{
     console.log("disconnected from client");
   });
-  socket.emit('newMessageEvent',{
-    from:"excelrock_mitesh@yahoo.com",
-    text:"hey how are u"
-  });
+
   socket.on('createMessageEvent',(message)=>{
     console.log("new message is ",message.text);
+    io.emit('newMessageEvent',{
+      from: message.from,
+      text:message.text
+    });
   });
 });
 
