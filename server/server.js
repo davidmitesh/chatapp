@@ -1,17 +1,28 @@
 const path=require('path');
 const express=require('express');
+const http=require('http');
 
-var app=express();
 const port=process.env.PORT||3000;
 
-var addr=path.join(__dirname,'../public');
+var socketIO=require('socket.io');
 
+
+var app=express();
+var server=http.createServer(app);
+socketIO.listen(server);
+
+var io=socketIO(server);
+var addr=path.join(__dirname,'../public');
 app.use(express.static(addr));
 
-// app.get('/',(req,res)=>{
-//   res.render(index.html);
-// });
+io.on('connection',(socket)=>{
+  console.log("new user connected");
 
-app.listen(port,()=>{
+  socket.on('disconnect',()=>{
+    console.log("disconnected from client");
+  });
+});
+
+server.listen(port,()=>{
   console.log(`hey server is up at ${port}`);
 });
