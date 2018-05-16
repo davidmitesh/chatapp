@@ -31,11 +31,11 @@ io.on('connection',(socket)=>{
     text:"new user joined"
   });
 
-  socket.on('createMessageEvent',(message)=>{
-    console.log("new message is ",message.text);
+  socket.on('createMessageEvent',(messag)=>{
+    console.log("new message is ",messag.text);
     io.emit('newMessageEvent',{
-      from: message.from,
-      text:message.text,
+      from: messag.from,
+      text:messag.text,
       createdAt: new Date().getTime()
     });
   });

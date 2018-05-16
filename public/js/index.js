@@ -7,7 +7,22 @@ socket.on('disconnect',function(){
 });
 socket.on('newMessageEvent',function(email){
   console.log("new message received",email);
+  var li=$('<li></li>');
+  li.text(`${email.from}:${email.text}`);
+  $('#messages').append(li); 
 });
-socket.emit('createMessageEvent',{
-  text:"hey how are you"
+
+$(document).ready(function(){
+  $('#messageform').on('submit',function(e){
+    e.preventDefault();
+  //
+  // $("#new").html("Hello, World!");
+  socket.emit('createMessageEvent',{
+    from:'user',
+    text:$("[name='message']").val()
+
+  },function(){
+
+  });
+  });
 });
