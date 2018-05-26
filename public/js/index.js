@@ -13,7 +13,7 @@ socket.on('newMessageEvent',function(email){
 });
 socket.on('newLocationMessage',function(message){
   var li=$('<li></li>');
-  var a=$('<a target="_blank">my current location</a>');
+  var a=$('<a target=\"_blank\">my current location</a>');
 
   li.text(`${message.from}:`);
   a.attr('href',message.url);
