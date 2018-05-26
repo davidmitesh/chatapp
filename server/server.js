@@ -3,6 +3,7 @@ const express=require('express');
 const http=require('http');
 
 const port=process.env.PORT||3000;
+const {generateLocationMessage}=require('./utils/message.js');
 
 var socketIO=require('socket.io');
 
@@ -30,7 +31,6 @@ io.on('connection',(socket)=>{
     from:"admin",
     text:"new user joined"
   });
-
   socket.on('createMessageEvent',(messag)=>{
     console.log("new message is ",messag.text);
     io.emit('newMessageEvent',{
@@ -39,7 +39,11 @@ io.on('connection',(socket)=>{
       createdAt: new Date().getTime()
     });
   });
+  socket.on('createLocationMessage',(location)=>{
+    io.emit('newLocationMessage',generateLocationMessage('admin',location.latitude,location.longitude));
+  });
 });
+
 
 server.listen(port,()=>{
   console.log(`hey server is up at ${port}`);
